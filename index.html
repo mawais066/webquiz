@@ -167,7 +167,7 @@
 
     <!-- ================= JAVASCRIPT CODE ================= -->
     <script>
-        // 1. Question Bank (10 Questions, 5 randomly chosen every attempt)
+        // 1. Question Bank (12 Questions, 5 randomly chosen every attempt)
         const questionBank = [
             {
                 category: "HTML5",
@@ -243,6 +243,20 @@
                 options: ["==", "===", "!=", "="],
                 correct: 1,
                 explanation: "The strict equality operator (===) checks both value and type without automatic type conversion."
+            },
+            {
+                category: "CSS3",
+                question: "Which CSS Flexbox property is used to align flex items along the main axis?",
+                options: ["justify-content", "align-items", "align-content", "flex-direction"],
+                correct: 0,
+                explanation: "'justify-content' aligns items along the main axis of the current line in a flex container."
+            },
+            {
+                category: "JavaScript",
+                question: "Which method converts a JavaScript object into a JSON string format?",
+                options: ["JSON.parse()", "JSON.stringify()", "JSON.toObject()", "JSON.convert()"],
+                correct: 1,
+                explanation: "'JSON.stringify()' converts a JavaScript object or value to a JSON-formatted string."
             }
         ];
 
