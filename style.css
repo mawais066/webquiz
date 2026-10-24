@@ -1,0 +1,59 @@
+/* =========================================
+   QUIZ APPLICATION STYLES (style.css)
+   ========================================= */
+
+/* Multi-colored Segmented Progress Bar */
+.segment {
+    flex: 1;
+    height: 10px;
+    border-radius: 9999px;
+    transition: all 0.3s ease;
+}
+
+.segment.pending {
+    background-color: #cbd5e1;
+}
+
+.dark .segment.pending {
+    background-color: #334155;
+}
+
+.segment.active {
+    background-color: #6366f1;
+    box-shadow: 0 0 10px #6366f1;
+    transform: scaleY(1.3);
+}
+
+.segment.correct {
+    background-color: #10b981;
+    box-shadow: 0 0 8px #10b981;
+}
+
+.segment.incorrect {
+    background-color: #ef4444;
+    box-shadow: 0 0 8px #ef4444;
+}
+
+/* Option Button Animations & Dynamic Highlighting */
+.option-btn {
+    transition: all 0.2s ease;
+}
+
+.option-btn.correct-ans {
+    background-color: rgba(16, 185, 129, 0.15) !important;
+    border-color: #10b981 !important;
+    color: #10b981 !important;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+}
+
+.option-btn.wrong-ans {
+    background-color: rgba(239, 68, 68, 0.15) !important;
+    border-color: #ef4444 !important;
+    color: #ef4444 !important;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+}
+
+/* Smooth Transitions */
+body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
