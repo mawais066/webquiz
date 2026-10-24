@@ -170,36 +170,42 @@
         // 1. Question Bank (10 Questions, 5 randomly chosen every attempt)
         const questionBank = [
             {
+                category: "HTML5",
                 question: "Which HTML5 element is used for the largest and most important heading?",
                 options: ["<h6>", "<head>", "<heading>", "<h1>"],
                 correct: 3,
                 explanation: "The <h1> element represents the main and highest level heading on an HTML page."
             },
             {
+                category: "CSS3",
                 question: "Which CSS property controls the spacing between inside content and its border?",
                 options: ["margin", "padding", "border-spacing", "gap"],
                 correct: 1,
                 explanation: "Padding defines the space between the content of an element and its border."
             },
             {
+                category: "JavaScript",
                 question: "What is the output of 'typeof NaN' in JavaScript?",
                 options: ["'number'", "'NaN'", "'undefined'", "'object'"],
                 correct: 0,
                 explanation: "In JavaScript, NaN (Not a Number) is technically a numeric data type per IEEE 754."
             },
             {
+                category: "JavaScript",
                 question: "Which keyword creates a block-scoped variable that cannot be reassigned?",
                 options: ["var", "let", "const", "static"],
                 correct: 2,
                 explanation: "'const' creates block-scoped variables that cannot be reassigned after declaration."
             },
             {
+                category: "DOM API",
                 question: "Which JavaScript method is used to attach an event listener to an element?",
                 options: ["attachEvent()", "addEventListener()", "listen()", "onClick()"],
                 correct: 1,
                 explanation: "'addEventListener()' is the modern, standard DOM method to attach event handlers."
             },
             {
+                category: "CSS3",
                 question: "What does CSS 'box-sizing: border-box;' do?",
                 options: [
                     "Includes padding and border in total width/height",
@@ -211,16 +217,32 @@
                 explanation: "'border-box' ensures padding and border are included in the element's total width and height."
             },
             {
+                category: "JavaScript",
                 question: "Which JavaScript array method returns a new array with all elements passing a test?",
                 options: ["map()", "forEach()", "filter()", "find()"],
                 correct: 2,
                 explanation: "'filter()' creates a new array with all elements that return true for the test function."
             },
             {
+                category: "Web APIs",
                 question: "Which storage mechanism stores data in the browser with no expiration date?",
                 options: ["sessionStorage", "Cookies with no Max-Age", "localStorage", "CacheStorage"],
                 correct: 2,
                 explanation: "'localStorage' retains data across browser sessions indefinitely until cleared."
+            },
+            {
+                category: "HTML5",
+                question: "Which HTML attribute specifies alternate text for an image if it cannot be displayed?",
+                options: ["title", "src", "alt", "description"],
+                correct: 2,
+                explanation: "The 'alt' attribute provides alternative text for screen readers or when images fail to load."
+            },
+            {
+                category: "JavaScript",
+                question: "Which operator is used to check both value and type equality in JavaScript?",
+                options: ["==", "===", "!=", "="],
+                correct: 1,
+                explanation: "The strict equality operator (===) checks both value and type without automatic type conversion."
             }
         ];
 
@@ -241,6 +263,7 @@
         const userNameInput = document.getElementById("userNameInput");
         const startQuizBtn = document.getElementById("startQuizBtn");
         const questionCountText = document.getElementById("questionCountText");
+        const categoryBadge = document.getElementById("categoryBadge");
         const timerText = document.getElementById("timerText");
         const timerBox = document.getElementById("timerBox");
         const segmentedBar = document.getElementById("segmentedBar");
@@ -258,6 +281,17 @@
         const restartQuizBtn = document.getElementById("restartQuizBtn");
         const themeToggleBtn = document.getElementById("themeToggleBtn");
         const themeIcon = document.getElementById("themeIcon");
+
+        // Helper: Escape HTML strings to prevent tag injection/rendering issues
+        function escapeHtml(str) {
+            if (str === null || str === undefined) return "";
+            return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
 
         // 4. Dark / Light Mode Switcher
         function initTheme() {
@@ -313,6 +347,7 @@
 
             const q = currentQuestions[index];
             questionCountText.textContent = `Question ${index + 1} of 5`;
+            if (categoryBadge) categoryBadge.textContent = q.category || "General";
             questionTitle.textContent = q.question;
 
             // Highlight current segment
@@ -324,17 +359,28 @@
             nextBtn.classList.add("opacity-50", "cursor-not-allowed");
             nextBtn.innerHTML = (index === 4) ? `View Results <i class="fa-solid fa-check ml-1.5"></i>` : `Next Question <i class="fa-solid fa-arrow-right ml-1.5"></i>`;
 
-            // Render Options
+            // Render Options safely using textContent so HTML tags like <h1>, <h6> render as visible text
             optionsContainer.innerHTML = "";
             const letters = ["A", "B", "C", "D"];
             q.options.forEach((opt, optIndex) => {
                 const btn = document.createElement("button");
                 btn.className = "option-btn w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60 hover:border-indigo-500 dark:hover:border-indigo-400 text-left flex items-center gap-3 font-medium transition cursor-pointer";
-                btn.innerHTML = `
-                    <span class="w-7 h-7 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center font-bold text-xs">${letters[optIndex]}</span>
-                    <span class="flex-1">${opt}</span>
-                    <span class="icon-indicator"></span>
-                `;
+                
+                const letterBadge = document.createElement("span");
+                letterBadge.className = "w-7 h-7 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center font-bold text-xs shrink-0";
+                letterBadge.textContent = letters[optIndex];
+
+                const textSpan = document.createElement("span");
+                textSpan.className = "flex-1";
+                textSpan.textContent = opt;
+
+                const iconIndicator = document.createElement("span");
+                iconIndicator.className = "icon-indicator";
+
+                btn.appendChild(letterBadge);
+                btn.appendChild(textSpan);
+                btn.appendChild(iconIndicator);
+
                 btn.addEventListener("click", () => selectOption(optIndex));
                 optionsContainer.appendChild(btn);
             });
@@ -504,16 +550,16 @@
                 item.className = "p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 text-xs sm:text-sm";
                 item.innerHTML = `
                     <div class="flex justify-between items-center mb-1 font-bold">
-                        <span>Q${i + 1}: ${ans.question}</span>
+                        <span>Q${i + 1}: ${escapeHtml(ans.question)}</span>
                         <span class="${ans.isCorrect ? 'text-emerald-500' : 'text-rose-500'}">
                             ${ans.isCorrect ? '✓ Correct' : '✗ Incorrect'}
                         </span>
                     </div>
                     <div class="text-slate-500 dark:text-slate-400 mt-1">
-                        <div>Your Answer: <strong class="${ans.isCorrect ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}">${ans.selected}</strong></div>
-                        <div>Correct Answer: <strong class="text-emerald-600 dark:text-emerald-400">${ans.correct}</strong></div>
+                        <div>Your Answer: <strong class="${ans.isCorrect ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}">${escapeHtml(ans.selected)}</strong></div>
+                        <div>Correct Answer: <strong class="text-emerald-600 dark:text-emerald-400">${escapeHtml(ans.correct)}</strong></div>
                     </div>
-                    <div class="mt-2 text-slate-400 italic">${ans.explanation}</div>
+                    <div class="mt-2 text-slate-400 italic">${escapeHtml(ans.explanation)}</div>
                 `;
                 reviewList.appendChild(item);
             });
