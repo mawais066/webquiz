@@ -164,7 +164,7 @@
 
     <!-- ================= JAVASCRIPT CODE ================= -->
     <script>
-        // 1. Question Bank (12 Questions, 5 randomly chosen every attempt)
+        // 1. Question Bank (5 Questions)
         const questionBank = [
             {
                 category: "HTML5",
@@ -182,13 +182,6 @@
             },
             {
                 category: "JavaScript",
-                question: "What is the output of 'typeof NaN' in JavaScript?",
-                options: ["'number'", "'NaN'", "'undefined'", "'object'"],
-                correct: 0,
-                explanation: "In JavaScript, NaN (Not a Number) is technically a numeric data type per IEEE 754."
-            },
-            {
-                category: "JavaScript",
                 question: "Which keyword creates a block-scoped variable that cannot be reassigned?",
                 options: ["var", "let", "const", "static"],
                 correct: 2,
@@ -203,57 +196,10 @@
             },
             {
                 category: "CSS3",
-                question: "What does CSS 'box-sizing: border-box;' do?",
-                options: [
-                    "Includes padding and border in total width/height",
-                    "Excludes padding from the total dimensions",
-                    "Draws a visible border around all boxes",
-                    "Prevents boxes from wrapping onto a new line"
-                ],
-                correct: 0,
-                explanation: "'border-box' ensures padding and border are included in the element's total width and height."
-            },
-            {
-                category: "JavaScript",
-                question: "Which JavaScript array method returns a new array with all elements passing a test?",
-                options: ["map()", "forEach()", "filter()", "find()"],
-                correct: 2,
-                explanation: "'filter()' creates a new array with all elements that return true for the test function."
-            },
-            {
-                category: "Web APIs",
-                question: "Which storage mechanism stores data in the browser with no expiration date?",
-                options: ["sessionStorage", "Cookies with no Max-Age", "localStorage", "CacheStorage"],
-                correct: 2,
-                explanation: "'localStorage' retains data across browser sessions indefinitely until cleared."
-            },
-            {
-                category: "HTML5",
-                question: "Which HTML attribute specifies alternate text for an image if it cannot be displayed?",
-                options: ["title", "src", "alt", "description"],
-                correct: 2,
-                explanation: "The 'alt' attribute provides alternative text for screen readers or when images fail to load."
-            },
-            {
-                category: "JavaScript",
-                question: "Which operator is used to check both value and type equality in JavaScript?",
-                options: ["==", "===", "!=", "="],
-                correct: 1,
-                explanation: "The strict equality operator (===) checks both value and type without automatic type conversion."
-            },
-            {
-                category: "CSS3",
                 question: "Which CSS Flexbox property is used to align flex items along the main axis?",
                 options: ["justify-content", "align-items", "align-content", "flex-direction"],
                 correct: 0,
                 explanation: "'justify-content' aligns items along the main axis of the current line in a flex container."
-            },
-            {
-                category: "JavaScript",
-                question: "Which method converts a JavaScript object into a JSON string format?",
-                options: ["JSON.parse()", "JSON.stringify()", "JSON.toObject()", "JSON.convert()"],
-                correct: 1,
-                explanation: "'JSON.stringify()' converts a JavaScript object or value to a JSON-formatted string."
             }
         ];
 
